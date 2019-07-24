@@ -1,9 +1,23 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_restaurant, only: [:show, :edit, :update, :destroy, :chef]
 
   # GET /restaurants
   def index
     @restaurants = Restaurant.all
+  end
+
+  def top
+    @restaurants = Restaurant.where(stars: 5)
+  end
+
+  def worst
+    @restaurants = Restaurant.where(stars: 1)
+  end
+
+  def chef
+
+    # restaurants/42/chef
+    # @restaurant = Restaurant.find(params[:id])
   end
 
   # GET /restaurants/1
@@ -46,13 +60,13 @@ class RestaurantsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_restaurant
-      @restaurant = Restaurant.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def restaurant_params
-      params.require(:restaurant).permit(:name, :address, :stars)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def restaurant_params
+    params.require(:restaurant).permit(:name, :address, :stars)
+  end
 end
